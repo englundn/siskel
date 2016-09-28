@@ -23,8 +23,21 @@ var Movies = Backbone.Collection.extend({
 
   sortByField: function(field) {
     // your code here
-    this.comparator = field;
-    this.sort();
+    if (this.comparator === field) {
+      this.comparator = function(a, b) {
+        if (a.get(field) < b.get(field)) {
+          return 1;
+        }
+        if (a.get(field) > b.get(field)) {
+          return -1;
+        }
+        return 0;
+      };
+      this.sort();
+    } else { 
+      this.comparator = field;
+      this.sort();
+    }
   }
 
 });
